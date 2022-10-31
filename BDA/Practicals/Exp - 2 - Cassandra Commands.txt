@@ -1,0 +1,39 @@
+java --version
+
+python --version
+
+cassandra -f
+r
+r
+r
+
+cqlsh> CREATE KEYSPACE Admin
+WITH replication = {'class': ‘First Strategy’, 'replication_factor' : 3}; 
+
+
+USE Admin;
+cqlsh: Admin>; CREATE TABLE emp(
+   emp_id int PRIMARY KEY,
+   emp_name text,
+   emp_city text,
+   emp_phone varint
+   );
+
+cqlsh: Admin> INSERT INTO emp(emp_id, emp_name, emp_city,
+   emp_phone) VALUES(1,'ram', 'Hyderabad', 9848022338);
+
+
+
+cqlsh: Admin> UPDATE emp SET emp_city='Delhi' WHERE emp_id=1;
+
+
+cqlsh: Admin> select * from emp;
+
+
+cqlsh: Admin> DELETE FROM emp WHERE emp_id=1;
+
+
+cqlsh: Admin> DROP TABLE emp;
+
+
+

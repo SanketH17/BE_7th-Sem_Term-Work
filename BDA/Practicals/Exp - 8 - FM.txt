@@ -1,0 +1,46 @@
+#The Flajolet-Martin algorithm allows us to find the approximate number of elements in a data stream.
+#Here is a demonstration of that algorithm in action.
+#Wikipedia link for how the algorithm works.
+#https://en.wikipedia.org/wiki/Flajolet%E2%80%93Martin_algorithm 
+
+data = [4,2,5,9,1,6,3,7]
+print("Hash functions are defined as (a*x+b)\%c, where x is an element of the set.")
+inputCount = int(input("Enter the number of hash functions: "))
+abcList = []
+
+for i in range(inputCount):
+	inputList = input("Enter the space-separated values of a, b and c: ").split(" ")
+	abcList.append([int(i) for i in inputList])
+finalCountsRecorded = []
+
+for i in abcList:
+	binElems = []
+	#Evaluates the hash function, then converts it to binary.
+	for j in set(data):
+	#Appends binary output to a list
+		binElems.append(str(bin((i[0]*j+i[1])%i[2])).split("b")[1])		
+	greatestTrailing = 0	
+	#Processes every element for that specific hash											 
+	for k in binElems:													
+		reversedCount = k[::-1]				
+		count = 0
+		for i in reversedCount:											
+			if(i=='1'):
+				if(count>greatestTrailing):
+					#The greatest number of trailing zeros are established
+					greatestTrailing = count							
+				break
+			else:
+				count+=1
+	#The formula R = 2^r is applied, where R is number of elems,and r is max 
+	#trailing zeros recorded
+	
+	finalCountsRecorded.append(2**greatestTrailing) 
+
+print("Counts recorded for each hash: ",finalCountsRecorded)
+
+
+# Inputs : 
+	# 1 -> 2
+	# 2 -> 3 7 32
+	# 3 -> 1 6 32

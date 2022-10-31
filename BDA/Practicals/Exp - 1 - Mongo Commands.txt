@@ -1,0 +1,28 @@
+show dbs
+
+use myTestDB
+
+db
+
+db.dropDatabase()
+
+db.createCollection("Employee")
+db.createCollection("Department")
+
+show collections
+
+db.Department.drop()
+
+show collections
+
+
+db.Employee.insert({name: 'Emp1', address: 'Pune'})
+db.Employee.insert({name: 'Emp2', address: 'Mumbai'})
+
+db.Employee.find().pretty()
+
+db.Employee.update({'name':'Emp1'}, {$set:{'name':'New Emp1'}})
+
+db.Employee.find().pretty()
+
+db.Employee.remove({'name':'Emp2'})
