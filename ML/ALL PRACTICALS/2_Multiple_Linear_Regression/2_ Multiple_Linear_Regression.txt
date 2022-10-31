@@ -1,0 +1,32 @@
+import pandas as pd
+from google.colab import files
+u = files.upload()
+
+import pandas
+d = pandas.read_csv("cars.csv")
+print(d)
+
+y = d['CO2']
+print(y)
+x = d[['Volume','Weight']]
+print(x)
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets,linear_model,metrics
+from sklearn.model_selection import train_test_split
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=1)
+r=linear_model.LinearRegression()
+r.fit(xtr,ytr)
+print(r.coef_)
+s=r.predict([[3300,1300]])
+print('prediction of co2 for given input is:',s)
+
+
+'''
+Multiple linear regression attempts to model the relationship between two or more features and a response by fitting a linear equation to the observed data. Clearly, 
+it is nothing but an extension of simple linear regression. It has a dataset with p features(or independent variables) and one response(or dependent variable). 
+Also, the dataset contains n rows/observations.
+
+It is to be observed on any dataset having more than one input parameter to predict one output variable which is with continuous value.
+'''

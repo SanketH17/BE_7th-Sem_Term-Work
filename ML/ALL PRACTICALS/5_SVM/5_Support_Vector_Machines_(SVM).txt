@@ -1,0 +1,46 @@
+from google.colab import files
+up=files.upload()
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+# reading csv file and extracting class column to y.
+x = pd.read_csv("breast-cancer-wisconsin.data")
+print(x.dtypes)
+x.columns =['Sample code number', 'Clump Thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape','Marginal Adhesion','Single Epithelial Cell Size','Bare Nuclei','Bland Chromatin','Normal Nucleoli','Mitoses','Class']
+print(x)
+x.drop(['Bare Nuclei'], axis=1, inplace=True)
+print(x.dtypes)
+x.shape
+a = np.array(x)
+print(a)
+a.shape
+y  = a[:,9] # classes having 2 and 4
+x=a[:,1:9]
+print(x)
+from sklearn.svm import SVC  
+clf = SVC(kernel='linear') 
+  
+# fitting x samples and y classes 
+clf.fit(x, y)
+clf.predict([[5, 9,6,3,4,2,5,2]])
+  
+from sklearn import svm
+svc = svm.SVC(kernel='rbf', C=1,gamma='auto').fit(x, y)
+svc.predict([[5, 9,6,3,4,2,5,2]])
+
+'''
+In machine learning, support vector machines (SVMs, also support vector networks) are supervised learning models with associated 
+learning algorithms that analyze data used for classification and regression analysis. 
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. 
+In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane 
+which categorizes new examples. 
+An SVM model is a representation of the examples as points in space, mapped so that the examples of the separate categories are 
+divided by a clear gap that is as wide as possible. 
+In addition to performing linear classification, SVMs can efficiently perform a non-linear classification, implicitly mapping 
+their inputs into high-dimensional feature spaces.
+
+What does SVM do? 
+Given a set of training examples, each marked as belonging to one or the other of two categories, 
+an SVM training algorithm builds a model that assigns new examples to one category or the other, 
+making it a non-probabilistic binary linear classifier.
+'''

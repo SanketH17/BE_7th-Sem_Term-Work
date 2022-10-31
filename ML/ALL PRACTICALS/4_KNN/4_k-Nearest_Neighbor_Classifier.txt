@@ -1,0 +1,66 @@
+import pandas as pd
+from google.colab import files
+u = files.upload()
+
+import pandas
+d = pandas.read_csv("Default.csv")
+print(d)
+
+x = d[['balance','income']]
+print(x)
+y = d['default']
+print(y)
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import datasets,linear_model,metrics
+from sklearn.model_selection import train_test_split
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=0.4)
+print(xtr)
+print(xte)
+
+from sklearn.preprocessing import MinMaxScaler
+m = MinMaxScaler()
+m.fit(xtr)
+trt = m.transform(xtr)
+tet = m.transform(xte)
+
+xtr["balance normalised"]= trt[:,0]
+xtr["income normalised"]= trt[:,1]
+xte["balance normalised"]= tet[:,0]
+xte["income normalised"]= tet[:,1]
+
+print(xtr)
+print(xte)
+
+from sklearn.neighbors import KNeighborsClassifier 
+k = KNeighborsClassifier(n_neighbors=5,metric="minkowski")
+k.fit(xtr[["balance","income"]],ytr)
+p = k.predict(xte[["balance","income"]])
+from sklearn.metrics import accuracy_score
+t = accuracy_score(p,yte)
+print("Accuracy is ",t)
+
+
+'''
+K Nearest Neighbors Classification is one of the classification techniques based on instance-based learning. 
+Models based on instance-based learning to generalize beyond the training examples. 
+To do so, they store the training examples first. 
+When it encounters a new instance (or test example), then they instantly build a relationship between stored training examples and 
+this new instant to assign a target function value for this new instance. 
+Instance-based methods are sometimes called lazy learning methods because they postponed learning until 
+the new instance is encountered for prediction.
+Instead of estimating the hypothetical function (or target function) once for the entire space, 
+these methods will estimate it locally and differently for each new instance to be predicted.
+'''
+
+
+'''
+Pseudocode:
+
+Store all training examples.
+Repeat steps 3, 4, and 5 for each test example.
+Find the K number of training examples nearest to the current test example.
+y_pred for current test example = most common class among K- Nearest training instances.
+Go to step 2.
+'''

@@ -1,0 +1,63 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model, metrics
+  
+# load the boston dataset
+boston = datasets.load_boston(return_X_y=False)
+  
+# defining feature matrix(X) and response vector(y)
+X = boston.data
+y = boston.target
+  
+# splitting X and y into training and testing sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4,
+                                                    random_state=1)
+  
+# create linear regression object
+reg = linear_model.LinearRegression()
+  
+# train the model using the training sets
+reg.fit(X_train, y_train)
+  
+# regression coefficients
+print('Coefficients: ', reg.coef_)
+  
+# variance score: 1 means perfect prediction
+print('Variance score: {}'.format(reg.score(X_test, y_test)))
+  
+# plot for residual error
+    
+## plotting residual errors in training data
+plt.scatter(reg.predict(X_train), reg.predict(X_train) - y_train,
+            color = "green", s = 10, label = 'Train data')
+  
+## plotting residual errors in test data
+plt.scatter(reg.predict(X_test), reg.predict(X_test) - y_test,
+            color = "blue", s = 10, label = 'Test data')
+  
+    
+## plot title
+plt.title("Residual errors")
+  
+## method call for showing the plot
+plt.show()
+
+
+'''
+Linear Regression :
+Linear Regression comes under the category of supervised machine learning algorithm. In supervised learning when given a data-set, 
+we already know what the correct output should look like, we already have an idea of the relationship between the input and the output.
+
+Supervised learning broadly covers two types of problems:
+Regression problems
+Classification problems
+
+
+
+Cost Function
+It’s important to know how accurate our predictions are in order to know how well our model performs and 
+if it needs further“training” or more “tuning” (which is basically adjustment of the parameters). This is where the cost function comes into the picture.
+
+The cost function is an expression through which we evaluate the quality of our current hypothesis and proceed to make changes accordingly.
+'''

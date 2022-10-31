@@ -1,0 +1,65 @@
+import pandas as pd
+url = "https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+# load dataset into Pandas DataFrame
+df = pd.read_csv(url, names=['sepal length','sepal width','petal length','petal width','target'])
+from sklearn.preprocessing import StandardScaler
+features = ['sepal length', 'sepal width', 'petal length', 'petal width']
+# Separating out the features
+x = df.loc[:, features].values
+# Separating out the target
+y = df.loc[:,['target']].values
+# Standardizing the features
+x = StandardScaler().fit_transform(x)
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components=2)
+principalComponents = pca.fit_transform(x)
+principalDf = pd.DataFrame(data = principalComponents
+            , columns = ['principal component 1', 'principal component 2'])
+ 
+finalDf = pd.concat([principalDf, df[['target']]], axis = 1)
+
+
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize = (8,8))
+ax = fig.add_subplot(1,1,1)
+ax.set_xlabel('Principal Component 1', fontsize = 15)
+ax.set_ylabel('Principal Component 2', fontsize = 15)
+ax.set_title('2 component PCA', fontsize = 20)
+targets = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+colors = ['r', 'g', 'b']
+for target, color in zip(targets,colors):
+   indicesToKeep = finalDf['target'] == target
+   ax.scatter(finalDf.loc[indicesToKeep, 'principal component 1'], finalDf.loc[indicesToKeep, 'principal component 2'], c = color, s = 50)
+ax.legend(targets)
+ax.grid()
+pca.explained_variance_ratio_
+
+# last output means -> these two values are varience of each component
+# addition of these two variables means -> there is 
+
+
+'''
+Principal Component Analysis is basically a statistical procedure to convert a set of observations of possibly 
+correlated variables into a set of values of linearly uncorrelated variables. Each of the principal components is chosen 
+in such a way so that it would describe most of them still available variance and all these principal components are orthogonal 
+to each other. In all principal components the first principal component has a maximum variance.
+
+These are basically performed on a square symmetric matrix. It can be a pure sum of squares and cross-products matrix or 
+Covariance matrix or Correlation matrix. A correlation matrix is used if the individual variance differs much.
+
+PCA for Data Visualization:
+For a lot of machine learning applications, 
+it helps to be able to visualize our data. 
+Visualizing 2 or 3 dimensional data is not that challenging. However, even many datasets used are multi- dimensional 
+because of multiple features. 
+We can use PCA to reduce that multi-dimensional data into 2 or 3 dimensions so that we can plot and hopefully understand 
+the data better.
+
+Steps involved
+
+Load the dataset Standardize 
+the data Calculate principal components for given dataset 
+Visualize 2D projection 
+Calculate variance of each principal component
+'''
