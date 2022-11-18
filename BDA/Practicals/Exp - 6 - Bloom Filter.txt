@@ -6,12 +6,12 @@ def sum(ip):
     
 def h1(ip):
     s = sum(ip)
-    return (s)%5
+    return (3*s+3)%6
 
 def h2(ip):
     s = sum(ip)
-    return (2*s+3)%5
-bit_vector = [0, 0, 0, 0, 0]
+    return (3*s+7)%8
+bit_vector = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 while True:
     ip = input("Enter a Integer ")
@@ -33,7 +33,13 @@ else:
 
 
 # Inputs :
-# 1 -> 9 
+# 1 -> 8
 # 2 -> 10
 # 3 -> ' '
-# 4 -> 23
+# 4 -> 48, 5
+
+
+'''
+It is a device used to detect whether an element is present in the pass or not.
+
+'''

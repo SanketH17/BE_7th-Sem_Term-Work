@@ -2,14 +2,15 @@ ip = list(map(int, input("Enter Elements").split()))
 
 bucket_list = []
 bucket_size_count = {}
-def checker():
-  for ct in bucket_size_count.keys():
-    if(bucket_size_count[ct]>2):
-      s2, e2, size2 = bucket_list.pop(-2)
-      s1, e1, size1 = bucket_list.pop(-2)
-      bucket_list.insert(-1, (s1,e2,size1*2))
-      bucket_size_count[ct]-=2
 
+
+def checker():
+    for ct in bucket_size_count.keys():
+        if(bucket_size_count[ct]>2):
+            s2, e2, size2 = bucket_list.pop(-2)
+            s1, e1, size1 = bucket_list.pop(-2)
+            bucket_list.insert(-1, (s1,e2,size1*2))
+            bucket_size_count[ct]-=2
 
 start_index = 0
 end_index = 0
@@ -17,40 +18,39 @@ end_index = 0
 pair = 0
 
 for i in range(len(ip)):
-  bit=ip[i]
-  if(bit==1):
-    if(pair == 1):
-      end_index = i;
-      pair=0
-      bucket_list.append((start_index, end_index, 2))
-      if 2 in bucket_size_count:
-        bucket_size_count[2]+=1
-      else:
-        bucket_size_count[2]=1
-      checker()
-    else:
-      start_index = i
-      pair=1
+    bit = ip[i]
+    if(bit == 1):
+        if(pair == 1):
+            end_index = i
+            pair=0
+            bucket_list.append((start_index, end_index, 2))
+            if 2 in bucket_size_count:
+                bucket_size_count[2]+=1
+            else:
+                bucket_size_count[2]=1        
+            checker()   
+        else:
+            start_index = i
+            pair=1
 
-print("Bucket indexes are",bucket_list)
+print("Bucket indexs are",bucket_list)
 starts = []
 ends = []
 for s,e,size in bucket_list:
-  starts.append(s)
-  ends.append(e)
+    starts.append(s)
+    ends.append(e)
 
 print("Buckets are",end=" ")
 
 for i in range(len(ip)):
-  bit = ip[i]
-  if(i in starts):
-    print(" ",bit,end=" ")
-  elif(i in ends):
-    print(bit,end=" ")
-  else:
-    print(bit,end=" ")
-
-
+    bit = ip[i]
+    if(i in starts):
+        print("    ",bit,end=" ")
+    elif(i in ends):
+        print(bit,end="    ")
+    else:
+        print(bit,end=" ")
+      
 k = int(input("\nEnter k "))
 length = len(ip)
 
@@ -59,18 +59,16 @@ bound2 = length-1
 
 ones_count=0
 
-
 for s,e,size in bucket_list[::-1]:
-  if(s<bound1 and e<bound1):
-    break
-  elif(s<=bound1 and e>=bound1):
-    ones_count+=int(size/2)
-    break
-  elif(s>=bound1 and e>=bound1):
-    ones_count+=size
+    if(s<bound1 and e<bound1):
+        break
+    elif(s<=bound1 and e>=bound1):
+        ones_count+=int(size/2)
+        break
+    elif(s>=bound1 and e>=bound1):
+        ones_count+=size
 
 print("Number of ones in last",k,"bits is",ones_count)
-
 
 # Inputs : 
 # 1. -> 1 0 0 1 0 1 0 1 1 0 0 0 1 0 1 1
